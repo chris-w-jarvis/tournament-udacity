@@ -12,11 +12,6 @@ id serial PRIMARY KEY,
  wins int,
  matches_played int);
 
-CREATE table tournaments(
-id serial PRIMARY KEY,
- number_entrants int,
- winner int REFERENCES players (id));
-
 CREATE table matches(
 match_id serial PRIMARY KEY,
  player1 int REFERENCES players (id),
@@ -25,9 +20,4 @@ match_id serial PRIMARY KEY,
 
 CREATE VIEW ordered_players AS SELECT id, name FROM
  players ORDER BY wins DESC;
-
-CREATE VIEW ordered_players_display AS
- SELECT a.id, b.id FROM
- ordered_players AS a, ordered_players AS b
- WHERE a.id != b.id;
 

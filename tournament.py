@@ -3,14 +3,13 @@
 # tournament.py -- implementation of a Swiss-system tournament
 #
 
-# THIS WORKS JUST NEED TO FIX FINAL OUTPUT
+# RUN THIS PROGRAM SEE PRINT OUTPUTS, FIX LAST METHOD
 
 import psycopg2
-import re
 
 def connect():
     """Connect to the PostgreSQL database.  Returns a database connection."""
-    return psycopg2.connect("dbname=tournaments")
+    return psycopg2.connect("dbname=tournament_udacity1")
     
 
 def deleteMatches():
@@ -58,14 +57,6 @@ def registerPlayer(name):
     db.commit()
     db.close()
 
-def initializeTourney(number_of_entrants):
-    db = connect()
-    c = db.cursor()
-    number_of_entrants = int(number_of_entrants)
-    c.execute('INSERT INTO tournaments VALUES (DEFAULT, %d,NULL);',(number_of_entrants,))
-    db.commit()
-    db.close()
-
 def playerStandings():
     """Returns a list of the players and their win records, sorted by wins.
 
@@ -98,19 +89,13 @@ def reportMatch(winner, loser):
     c = db.cursor()
     c.execute('UPDATE players SET wins = wins + 1, '
     'matches_played = matches_played + 1 WHERE id = %s;',(winner,))
-    c.execute('UPDATE players SET matches_played = matches_played + 1 WHERE'
-    ' id = %s;',(loser,)) 
-    db.commit()
-
-    # report to matches table
-    c.execute('INSERT INTO matches VALUES (DEFAULT, %s, %s, NULL)',(winner,loser,))
+    c.execute('UPDATE players SET matches_played = matches_played + '
+    '1 WHERE id = %s;',(loser,)) 
     db.commit()
     db.close()
  
 def swissPairings():
     
-    # this is designed to work for odd numbers as well, giving the odd team out
-    # a bye week and points equivalent to a win
     """Returns a list of pairs of players for the next round of a match.
   
     Assuming that there are an even number of players registered, each player
@@ -130,13 +115,10 @@ def swissPairings():
     c.execute('SELECT id, name FROM ordered_players;')
     results = c.fetchall()
     match_list = []
-    for row1, row2 in results[::2]:
-        if row2:
-            match_list.append((row1,row2))
-        '''else:
-            row1 = str(row1)
-            match_list.append(('%s has bye' % (row1)))'''
-    print match_list
-    return match_list
-    
-swissPairings()
+    for row, row2  in results:
+        match_list.append((row,row2))
+    match_list_merge = []
+    for num in range(0,len(match_list),2):
+        match_list_merge.append((match_list[num] + match_list[num+1]))
+    db.close()
+    return match_list_merge
