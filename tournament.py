@@ -110,6 +110,14 @@ def swissPairings():
         id2: the second player's unique id
         name2: the second player's name
     """
+
+    # this code pulls the already ordered players from an sql view, then
+    # adds the name and id of each as a tuple to an empty list. Then in
+    # python I merged each pair of tuples that would represent each game
+    # into one. After a week of experimentation I could not discover a
+    # more elequant way to do this using SQL but in my fumbling I learned
+    # a lot more about using sql itself and its api.
+
     db = connect()
     c = db.cursor()
     c.execute('SELECT id, name FROM ordered_players;')
