@@ -15,8 +15,7 @@ id serial PRIMARY KEY,
 CREATE table matches(
 match_id serial PRIMARY KEY,
  player1 int REFERENCES players (id),
- player2 int REFERENCES players (id),
- tournament_id int REFERENCES tournaments (id));
+ player2 int REFERENCES players (id));
 
 CREATE VIEW ordered_players AS SELECT id, name FROM
  players ORDER BY wins DESC;

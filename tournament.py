@@ -3,8 +3,6 @@
 # tournament.py -- implementation of a Swiss-system tournament
 #
 
-# RUN THIS PROGRAM SEE PRINT OUTPUTS, FIX LAST METHOD
-
 import psycopg2
 
 def connect():
