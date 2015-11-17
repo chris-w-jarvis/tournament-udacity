@@ -10,7 +10,8 @@ the print statements in tournament.py and tournament_test.py
 back to python2 syntax.
 
 INSTRUCTIONS
-initialize a postgresql server using 'psql server_name'
-import my tournaments.sql file using =>'\i tournaments.sql'
-run tournament_test.py with a python3 interpreter to check
+1. initialize the postgresql database using 'psql tournament_udacity1'
+2. import my tournaments.sql file using =>'\i tournaments.sql'
+3. exit psql '\q'
+4. run tournament_test.py with a python3 interpreter to check
 functionality
